@@ -1,0 +1,26 @@
+services:
+  estagio-monitor:
+    build: .
+    container_name: estagio-monitor
+
+    # Injeta as variáveis do .env
+    env_file:
+      - .env
+
+    # Variáveis adicionais do PlayWright
+    environment:
+      - DISPLAY=:99
+
+    volumes:
+      # Sincronização de horário
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+      # Credenciais do Google — somente leitura por segurança
+      - ./credentials.json:/app/credentials.json:ro
+      # Preferências do usuário — leitura e escrita
+      - ./user_prefs.json:/app/user_prefs.json
+      # Dados temporários entre bots — leitura e escrita
+      - ./vagas_temp.json:/app/vagas_temp.json
+
+    # Reinicia automaticamente se o container cair
+    restart: unless-stopped

@@ -1,0 +1,17 @@
+# Credenciais e segredos
+.env
+credentials.json
+user_prefs.json
+
+# Dados temporários
+vagas_temp.json
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+```
+
+---
+

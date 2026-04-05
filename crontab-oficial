@@ -1,0 +1,23 @@
+# ──────────────────────────────────────────────
+# Estágio Monitor — crontab
+# Executa os 3 bots em sequência a cada 6 horas
+# Horários: 00:00, 06:00, 12:00, 18:00
+#
+# Intervalo de 5 minutos entre cada bot garante
+# que um termine antes do próximo iniciar.
+# ──────────────────────────────────────────────
+
+# Variável de ambiente para timezone correto
+SHELL=/bin/bash
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+
+# Bot 1 — Scraper: coleta vagas do IEL/AM
+0 */6 * * * root /usr/local/bin/python /app/bot_scraper.py >> /var/log/cron.log 2>&1
+
+# Bot 2 — Sheets: registra vagas novas na planilha (5 min após o scraper)
+5 */6 * * * root /usr/local/bin/python /app/bot_sheets.py >> /var/log/cron.log 2>&1
+
+# Bot 3 — Telegram: notifica vagas novas (10 min após o scraper)
+10 */6 * * * root /usr/local/bin/python /app/bot_telegram.py --notificar >> /var/log/cron.log 2>&1
+
+# Linha em branco obrigatória no final do crontab
