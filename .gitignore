@@ -10,7 +10,7 @@ vagas_temp.json
 __pycache__/
 *.pyc
 *.pyo
-.venv/
+.rpa/
 ```
 
 ---
